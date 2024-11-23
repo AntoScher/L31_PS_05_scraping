@@ -26,6 +26,7 @@ if __name__ == "__main__":
 
 
       #response.css('div.Pk6w8 img::attr(alt)').get()
+    # scrapy crawl divan
 
 
 
