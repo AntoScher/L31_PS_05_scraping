@@ -7,14 +7,16 @@ class DivanSpider(scrapy.Spider):
         'https://www.divan.ru/category/svet',
     ]
 
-    def parse(self, response):
-        print(f"Visited {response.url}")
+    def parse(self, response):       
         for product in response.css('div.Pk6w8'):
             name = product.css('img::attr(alt)').get()
-            if name:
-                print(f"Found product: {name}")
+            price = response.css('meta[itemprop="price"]::attr(content)').get()  # Извлечение цены
+            link = response.urljoin(response.css('div.lsooF a::attr(href)').get())  # Извлечение ссылки
+            
             yield {
                 'name': name,
+                'price': price,
+                'link': link,
             }
 
 if __name__ == "__main__":
@@ -22,12 +24,3 @@ if __name__ == "__main__":
     process.crawl(DivanSpider)
     process.start()
     print("Crawling finished")
-
-
-
-      #response.css('div.Pk6w8 img::attr(alt)').get()
-    # scrapy crawl divan
-
-
-
-        
